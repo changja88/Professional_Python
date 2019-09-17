@@ -9,7 +9,7 @@ print(
 
 t1 = (1, 2, [30, 40])  # 리스트는 해시 불가능 하다
 print(
-    hash(t1)
+    # hash(t1)
 )
 
 # - forzenset은 언제나 해시 가능하다
