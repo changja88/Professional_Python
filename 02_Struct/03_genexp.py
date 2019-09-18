@@ -1,7 +1,7 @@
 # 제너레이터 표현식
 symbols = '!@#$%^'
 tuple(ord(symbol) for symbol in symbols)
-# 제너레이터 표현식이 함수에 보내는 단 하나의 인수라며 ㄴ괄호 안에 또 괄호를 넣을 필요는 없다
+# 제너레이터 표현식이 함수에 보내는 단 하나의 인수라면 괄호 안에 또 괄호를 넣을 필요는 없다
 import array
 
 array.array('I', (ord(symbol) for symbol in symbols))
