@@ -63,9 +63,10 @@ for name, cc, pop, (latitude, logitude) in metro_areas:
 #   - 명명된 튜플
 #       - collections.namedtuple() 함수는 필드명과 클래스명을 추가한 튜플의 서브클래스를 생성하는 팰토리 함수로서, 디벙깅에 유용하다
 from collections import namedtuple
-
+#       - namedtuple은 객체를 반환한다
+#       - 만드는 방법 namedtuple('객체이름','필드명1 필드명2')
 City = namedtuple('City', 'name country population coordinates')
-# City = namedtuple('City', ['name', 'country', 'population', 'coordinates']) # 위와 상
+# City = namedtuple('City', ['name', 'country', 'population', 'coordinates']) # 위와 상동
 tokyo = City('Tokyo', 'JP', 36.933, (35.68922, 139.123123))
 print(tokyo)
 
