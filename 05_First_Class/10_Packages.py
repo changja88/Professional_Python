@@ -103,4 +103,41 @@ print(
 )
 
 # - partialmethod함수는 parial과 동일하지만 메서드에 대해 작동하도록 설게되었다
+#   - partial은 사용 준비가 된 callable을 리턴하고
+#   - parialmethod는 unbound method 로 사용될 callable을 리턴한다
+import functools
+def standalone(self, a=1, b=2):
+    print(' called standalone with : ', (self, a, b))
+    if self is not None:
+        print(' self.attr = ', self.attr)
 
+
+class MyClass:
+    "Demostration class for functools"
+
+    def __init__(self):
+        self.attr = 'instance attribute'
+
+    method1 = functools.partialmethod(standalone)
+    method2 = functools.partial(standalone)
+
+
+o = MyClass()
+print('standalone')
+standalone(None)
+print()
+
+print('method 1 as partialmethod')
+o.method1() # partialmethod 에는 self가 들어가 있기 때문에 성공
+print()
+
+print('mehtod2 as partial')
+try:
+    o.method2() # partial 에는 self가 없기 때문에 실패
+except TypeError as err:
+    print('ERROR:{}'.format(err))
+
+
+print()
+print('method2 as partial to work')
+o.method2(o) # partial에 없는 self를 넣어주면 성공
