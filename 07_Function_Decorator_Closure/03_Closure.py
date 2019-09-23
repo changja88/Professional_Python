@@ -46,7 +46,7 @@ print(avg(12))
 
 print()
 print(avg.__code__.co_varnames)
-print(avg.__code__.co_freevars)  # 자유 변수 확인 가
+print(avg.__code__.co_freevars)  # 자유 변수 확인 가능
 print(avg.__closure__)  # 여기에 저장된다
 print(avg.__closure__[0].cell_contents)  # 저장된 값도 확인 가능 하다
 # - 정리하면, 클로저는 함수를 정의할 때 재하던 자유 변수에 대한 바인딩을 유지하는 함수다

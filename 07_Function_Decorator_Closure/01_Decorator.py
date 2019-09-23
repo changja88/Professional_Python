@@ -11,6 +11,7 @@
 
 
 # 데코레이터 기본 지식
+# - 데코레이터는 함수를 리턴해야 한다
 # - 데코레이터는 다른 함수를 인수로 받는 콜러블(데커레이트된 함수)이다.
 # - 데코레이터는 데커레이트된 함수에 어떤 처리를 수행하고, 함수를 반환하거나 함수를 다른 함수나 콜러블 객체로 대채한다
 
@@ -31,7 +32,7 @@ def target():
     print('running target()')
 
 
-target()  # 모듈이 로딩 될때 바로 실행되기 때문에 running target()이 프린트 되지 않는
+target()  # 모듈이 로딩 될때 바로 실행되기 때문에 running target()이 프린트 되지 않는다
 
 # - 2. 데커레이터의 핵심 특징은 데커레이트된 함수가 정의된 직후에 실행이다는 것이다
 # - 일반적으로 파이썬이 모듈을 로딩하는 시점, 즉 '임포트 타임'에 실행 된다
@@ -120,17 +121,15 @@ def best_promo(order):
 
 # 대부분의 데커레이터는 데커레이트된 함수를 변경한다
 # - 즉 내부 함수를 정의하고 그것을 반환하여 데커레이트된 함수를 대체한다
-# - 내부 함수를 사용하는 코든느 제대로 작동하기 위해 거의 항상 클로저에 의존한다.
+# - 내부 함수를 사용하는 코든는 제대로 작동하기 위해 거의 항상 클로저에 의존한다.
 
 
 # 간단한 데커레이터 구현하기
-import time
-
 
 def clock(func):
     def clocked(*args):
         t0 = time.perf_counter()
-        result = func(*args)  # clockecd()에 대한 클로저에 자유변수 func가 들어가야 이 코드가 작동한
+        result = func(*args)  # clockecd()에 대한 클로저에 자유변수 func가 들어가야 이 코드가 작동한다
         elapsed = time.perf_counter()
         name = func.__name__
         arg_str = ', '.join(repr(arg) for arg in args)
@@ -151,10 +150,6 @@ def factorial(n):
 
 
 # factorial 실제로 작동 하는 순서 --------------------
-def factorial(n):
-    return 1 if n < 2 else n * factorial(n - 1)
-
-
 factorial = clock(factorial)
 # ------------------------------------------------
 
@@ -175,7 +170,7 @@ if __name__ == '__main__':
 
 # 매개변수화된 데커레이터
 # - 소스 코드에서 데커레이터를 파싱할 때 파이썬은 데커레이트된 함수를 가져와서 데커레이터 함수의 첫번째 인수로 넘겨준다
-# - 어떠헥 다른 인수를 받는 데커레이터를 만들 수 있을까?
+# - 어떻게 다른 인수를 받는 데커레이터를 만들 수 있을까?
 #   - 데커레이터를 반환하는 데커레이터 팩토리를 만들고 나서, 데커레이트될 함수에 데커레이터 팩토리를 적용하면 된다
 # 기본 ---------------------------------------------------------------------------
 print()
@@ -197,16 +192,16 @@ print('running main()')
 print('registry ->', registry)
 f1()
 # 기본 ---------------------------------------------------------------------------
+
+# 매개변수화된 데코레이터 1 ---------------------------------------------------------
+print()
 registry = set()
 
-# 매개변수화된 등록 데코레이터-------------------------------------------------------------
-print()
 
-
-def register(active=True):
-    def decorate(func):
+def register(active=True):  # 이함수가 데커레이터 팩토리
+    def decorate(func):  # 이게 데커리이터임으로 함수를 반환해야 한다
         print('running register(active=%s) -> decorate(%s)' % (active, func))
-        if active:
+        if active:  # 클로저에서 읽어온 active
             registry.add(func)
         else:
             registry.discard(func)
@@ -233,11 +228,11 @@ print('running main()')
 print('registry ->', registry)
 
 register()(f3)  # register()까지 하면 decorate()를 나오고, 이게 f3()에 적용된다
-register(active=False)(f3)
-# 매개변수화된 등록 데코레이터-------------------------------------------------------------
+register(active=False)(f3)  # 팩토리로 사용되기 때문에 register()를 호출하고 (f3)을 해준다
+# 매개변수화된  데코레이터 1 ---------------------------------------------------------
 
 
-# 매개변수화된 데코레이터----------------------------------------------------------------
+# 매개변수화된 데코레이터 2 -------------------------------------------------------------
 import time
 
 DEFAULT_FMT = '[{elapsed:0.8f {name}({args}) -> {result}]'
@@ -245,7 +240,7 @@ DEFAULT_FMT = '[{elapsed:0.8f {name}({args}) -> {result}]'
 
 def clock(fmt=DEFAULT_FMT):  # 매개변수화된 데커레이터 팩토리
     def decorate(func):  # 실제 데커레이터
-        def clocked(*_args):  # 데커레이터된 함수를 래핑한다, _args가 실제 clockecd()의 인수를 담고 있다
+        def clocked(*_args):  # 데커레이터된 함수를 래핑한다, _args가 실제 clocked()의 인수를 담고 있다
             t0 = time.time()
             _result = func(*_args)  # 데커레이터된 함수의 결과를 저장한다
             elapsed = time.time() - t0
@@ -270,4 +265,5 @@ if __name__ == '__main__':
 
 
     for i in range(3):
-        snooze(.123)
+        snooze(.123)  # 매개변수화된 데코레이터1 과 사용 방법이 다른 이유는 clockec가 직접 snooze()의 결과 값을 리턴하기 때문
+# 매개변수화된 데코레이터 2 -------------------------------------------------------------

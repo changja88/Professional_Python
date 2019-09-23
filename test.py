@@ -1,21 +1,30 @@
-
-
-def register(activie):
+def pretty(abc=True):
     def decorate(func):
-        print('i got func')
-        if activie:
-            print('also i get true')
-        else:
-            print('also i got false')
         return func
 
     return decorate
 
 
-if __name__ == '__main__':
-    @register(activie=False)
-    def f1(a, b):
-        print('f1 start')
+def pretty2(abc=True):
+    def decorate(func):
+        def real(*_args):
+            _result = func(*_args)
+            return _result
+
+        return real
+
+    return decorate
 
 
-    f1(2, 3)
+@pretty()
+def f1():
+    print('f1')
+
+
+@pretty2()
+def f2():
+    print('f2')
+
+f1()
+pretty()(f1)
+f2()
