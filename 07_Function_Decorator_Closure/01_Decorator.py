@@ -31,7 +31,7 @@ def target():
     print('running target()')
 
 
-target() # 모듈이 로딩 될때 바로 실행되기 때문에 running target()이 프린트 되지 않는
+target()  # 모듈이 로딩 될때 바로 실행되기 때문에 running target()이 프린트 되지 않는
 
 # - 2. 데커레이터의 핵심 특징은 데커레이트된 함수가 정의된 직후에 실행이다는 것이다
 # - 일반적으로 파이썬이 모듈을 로딩하는 시점, 즉 '임포트 타임'에 실행 된다
@@ -39,28 +39,127 @@ target() # 모듈이 로딩 될때 바로 실행되기 때문에 running target(
 print()
 registry = []
 
+
 def register(func):
     print('running register(%s)' % func)
     registry.append(func)
     return func
 
+
 @register
 def f1():
     print('running f1()')
+
 
 @register
 def f2():
     print('running f2()')
 
-@register
+
 def f3():
     print('running f3()')
 
+
 def main():
     print('running main()')
-    print('registry ->',registry)
+    print('registry ->', registry)
     f1()
     f2()
     f3()
 
-main()
+
+if __name__ == '__main__':
+    main()
+
+# 결과에서 알 수 있는 것 : 함수 데커레이터는 모듈이 임포트되자마자 실행되지만,
+#                     데커레이트된 함수는 명시적으로 호출될 때 만 실행된다 -> '임포트 타임' '런타임'의 차이를 보여준다
+# 위 예제와 실제 사용 간의 차이
+#   - 데커레이터 함수가 데커레이트되는 함수와 같은 모듈에 정의 되어 있다. 일반적으로 실제 코드에서는 데커레이터를 정의하는
+#     모듈과 데커레이터를 적용하는 모듈을 분리해서 구현한다
+#   - register() 데커레이터가 인수로 전달된 함수와 동일한 함수를 반환하지만,
+#     실제 코드에서 대부분의 데커레이터는 내부 함수를 정의해서 반환한다
+
+
+# 데커레이터로 개선된 전략 패턴
+promos = []
+
+
+def promotion(promo_func):
+    promos.append(promo_func)
+    return promo_func
+
+
+@promotion
+def fidelity(order):
+    """충성도 포인트가 1000점 이상인 고객에게 전체 5% 할인 적용"""
+    return order.total() * 0.05 if order.customer.fidelity >= 1000 else 0
+
+
+@promotion
+def bulk_item(order):
+    """20개 이상의 동일 상품을 구입하면 10% 할인 적용"""
+    discount = 0
+    for item in order.cart:
+        discount += item.total() * .1
+    return discount
+
+
+@promotion
+def large_order(order):
+    """10종류 이상의 상품을 구입하면 전체 7% 할인 적용"""
+    distinct_items = {item.product for item in order.cart}
+    if len(distinct_items) > 10:
+        return order.totla() * .07
+    return 0
+
+
+def best_promo(order):
+    """최대로 할일받을 금액을 반환한다"""
+    return max(promo(order) for promo in promos)
+
+
+# 대부분의 데커레이터는 데커레이트된 함수를 변경한다
+# - 즉 내부 함수를 정의하고 그것을 반환하여 데커레이트된 함수를 대체한다
+# - 내부 함수를 사용하는 코든느 제대로 작동하기 위해 거의 항상 클로저에 의존한다.
+
+
+# 간단한 데커레이터 구현하기
+import time
+
+
+def clock(func):
+    def clocked(*args):
+        t0 = time.perf_counter()
+        result = func(*args)  # clockec()에 대한 클로저에 자유변수 func가 들어가야 이 코드가 작동한
+        elapsed = time.perf_counter()
+        name = func.__name__
+        arg_str = ', '.join(repr(arg) for arg in args)
+        print('[%0.8fs] %s(%s) -> %r' % (elapsed, name, args, result))
+        return result
+
+    return clocked
+
+
+@clock
+def snooze(seconds):
+    time.sleep(seconds)
+
+
+@clock
+def factorial(n):
+    return 1 if n < 2 else n * factorial(n - 1)
+
+
+# factorial 실제로 작동 하는 순서 --------------------
+def factorial(n):
+    return 1 if n < 2 else n * factorial(n - 1)
+
+
+factorial = clock(factorial)
+# ------------------------------------------------
+
+if __name__ == '__main__':
+    print('*' * 40, 'Calling snooze(.123)')
+    snooze(.123)
+    print('*' * 40, 'Calling factorial(6)')
+    print('6! =', factorial(6))
