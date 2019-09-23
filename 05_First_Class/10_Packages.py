@@ -94,18 +94,20 @@ print(hiphenate(s))
 from operator import mul
 from functools import partial
 
-triple = partial(mul, 3) # mul 함수의 첫번째 위치 인수를 3으로 바인딩해서 triple() 함수를 새로 만든다
+triple = partial(mul, 3)  # mul 함수의 첫번째 위치 인수를 3으로 바인딩해서 triple() 함수를 새로 만든다
 print(('---------------------------------'))
-print(triple(7)) # 테스트 이미 3이 들어가 있기 때문에 7을 넣어주면 21이 나온다
+print(triple(7))  # 테스트 이미 3이 들어가 있기 때문에 7을 넣어주면 21이 나온다
 
 print(
-    list(map(triple, range(1, 10))) # 3이 첫번째 인수로 들어가 있기때문에 3을 1에서 10까지 곱한 값이 나온다
+    list(map(triple, range(1, 10)))  # 3이 첫번째 인수로 들어가 있기때문에 3을 1에서 10까지 곱한 값이 나온다
 )
 
 # - partialmethod함수는 parial과 동일하지만 메서드에 대해 작동하도록 설게되었다
 #   - partial은 사용 준비가 된 callable을 리턴하고
 #   - parialmethod는 unbound method 로 사용될 callable을 리턴한다
 import functools
+
+
 def standalone(self, a=1, b=2):
     print(' called standalone with : ', (self, a, b))
     if self is not None:
@@ -128,16 +130,17 @@ standalone(None)
 print()
 
 print('method 1 as partialmethod')
-o.method1() # partialmethod 에는 self가 들어가 있기 때문에 성공
+o.method1()  # partialmethod 에는 self가 들어가 있기 때문에 성공
 print()
 
 print('mehtod2 as partial')
 try:
-    o.method2() # partial 에는 self가 없기 때문에 실패
+    o.method2()  # partial 에는 self가 없기 때문에 실패
 except TypeError as err:
     print('ERROR:{}'.format(err))
 
-
 print()
 print('method2 as partial to work')
-o.method2(o) # partial에 없는 self를 넣어주면 성공
+o.method2(o)  # partial에 없는 self를 넣어주면 성공
+
+
