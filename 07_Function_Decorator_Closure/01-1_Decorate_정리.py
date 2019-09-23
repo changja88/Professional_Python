@@ -72,7 +72,7 @@ f3()  # 이미 param에 값을 전달했음으로 바로 호출 할 수 있다
 
 # -----------------------------------------------------------------------------
 
-# 사용 방법 3 -> 데코레이터에게 함수의 인자를 전달하는 방법
+# 사용 방법 3 -> 데커레이터게 넘어온 함수의 인자를 받는 방법
 # -----------------------------------------------------------------------------
 # 방법 1
 def pretty(func):
@@ -82,11 +82,6 @@ def pretty(func):
 
     return decorate
 
-
-# @pretty
-# def f4(*args):
-#     return sum(args)
-#
 
 @pretty
 def f4(a, b):
@@ -105,14 +100,9 @@ def pretty(func):
     return decorate
 
 
-# @pretty
-# def f4(*args):
-#     return sum(args)
-#
-
 @pretty
-def f5(a, b):
-    return a + b
+def f5(*args):
+    return sum(args)
 
 
 print(f5(1, 2))
