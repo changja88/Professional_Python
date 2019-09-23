@@ -130,7 +130,7 @@ import time
 def clock(func):
     def clocked(*args):
         t0 = time.perf_counter()
-        result = func(*args)  # clockec()에 대한 클로저에 자유변수 func가 들어가야 이 코드가 작동한
+        result = func(*args)  # clockecd()에 대한 클로저에 자유변수 func가 들어가야 이 코드가 작동한
         elapsed = time.perf_counter()
         name = func.__name__
         arg_str = ', '.join(repr(arg) for arg in args)
@@ -163,3 +163,111 @@ if __name__ == '__main__':
     snooze(.123)
     print('*' * 40, 'Calling factorial(6)')
     print('6! =', factorial(6))
+
+# 누적된 데커레이터
+# @d1
+# @d2
+# def f():
+#     print('f')
+#   - 위 코드는 아래와 동일하다 즉 아래에서 위로 전달이 된다
+# f = d1(d2(f))
+
+
+# 매개변수화된 데커레이터
+# - 소스 코드에서 데커레이터를 파싱할 때 파이썬은 데커레이트된 함수를 가져와서 데커레이터 함수의 첫번째 인수로 넘겨준다
+# - 어떠헥 다른 인수를 받는 데커레이터를 만들 수 있을까?
+#   - 데커레이터를 반환하는 데커레이터 팩토리를 만들고 나서, 데커레이트될 함수에 데커레이터 팩토리를 적용하면 된다
+# 기본 ---------------------------------------------------------------------------
+print()
+registry = []
+
+
+def register(func):
+    print('running register(%s)' % func)
+    registry.append(func)
+    return func
+
+
+@register
+def f1():
+    print('running f1()')
+
+
+print('running main()')
+print('registry ->', registry)
+f1()
+# 기본 ---------------------------------------------------------------------------
+registry = set()
+
+# 매개변수화된 등록 데코레이터-------------------------------------------------------------
+print()
+
+
+def register(active=True):
+    def decorate(func):
+        print('running register(active=%s) -> decorate(%s)' % (active, func))
+        if active:
+            registry.add(func)
+        else:
+            registry.discard(func)
+        return func
+
+    return decorate
+
+
+@register(active=False)
+def f1():
+    print('running f1()')
+
+
+@register
+def f2():
+    print('running f2()')
+
+
+def f3():
+    print('running f3()')
+
+
+print('running main()')
+print('registry ->', registry)
+
+register()(f3)  # register()까지 하면 decorate()를 나오고, 이게 f3()에 적용된다
+register(active=False)(f3)
+# 매개변수화된 등록 데코레이터-------------------------------------------------------------
+
+
+# 매개변수화된 데코레이터----------------------------------------------------------------
+import time
+
+DEFAULT_FMT = '[{elapsed:0.8f {name}({args}) -> {result}]'
+
+
+def clock(fmt=DEFAULT_FMT):  # 매개변수화된 데커레이터 팩토리
+    def decorate(func):  # 실제 데커레이터
+        def clocked(*_args):  # 데커레이터된 함수를 래핑한다, _args가 실제 clockecd()의 인수를 담고 있다
+            t0 = time.time()
+            _result = func(*_args)  # 데커레이터된 함수의 결과를 저장한다
+            elapsed = time.time() - t0
+            name = func.__name__
+            args = ', '.join(repr(arg) for arg in _args)
+            result = repr(_result)
+            print(fmt.format(**locals()))  # **locals()를 사용하면 fmt가 clocked()의 지역 변수를 모두 참조할수 있게 해준다
+            return _result
+
+        return clocked
+
+    return decorate
+
+
+if __name__ == '__main__':
+    print()
+
+
+    @clock('{name}: {elapsed}s')
+    def snooze(seconds):
+        time.sleep(seconds)
+
+
+    for i in range(3):
+        snooze(.123)
