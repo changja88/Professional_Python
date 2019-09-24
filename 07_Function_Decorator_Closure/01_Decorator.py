@@ -215,7 +215,7 @@ def f1():
     print('running f1()')
 
 
-@register
+@registerb
 def f2():
     print('running f2()')
 
