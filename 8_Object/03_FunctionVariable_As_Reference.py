@@ -51,11 +51,13 @@ bus1.pick('Charie')
 print(bus1.passengers)
 
 bus2 = HauntedBus()
-bus2.pick('Carrie')
+bus2.pick('Charie')
 print(bus2.passengers)
 
 bus3 = HauntedBus()
+print()
 print(bus3.passengers)  # 미친 기본값이 더이상 빈 리스트가 아니다
+print(bus2==bus3)
 
 bus3.pick('Dave')
 print(bus2.passengers)  # 미친 bus3에 집어넣은 Dave가 bus2에 나온다

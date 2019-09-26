@@ -1,30 +1,31 @@
-def pretty(abc=True):
-    def decorate(func):
-        return func
+class CustomClass:
+    abc = 3
 
-    return decorate
+    def add_instance_method(self, a, b):
+        return a + b
 
+    @classmethod
+    def add_class_method(cls, a, b):
+        return a + b
 
-def pretty2(abc=True):
-    def decorate(func):
-        def real(*_args):
-            _result = func(*_args)
-            return _result
-
-        return real
-
-    return decorate
+    @staticmethod
+    def add_static_method(a, b):
+        return a + b
 
 
-@pretty()
-def f1():
-    print('f1')
+print(CustomClass.add_instance_method(None, 3, 5))
+
+# 첫번째 인자가 클래스지만 생략하고 접근 해야한다
+print(CustomClass.add_class_method(3, 5))
+
+print(CustomClass.add_static_method(3, 5))
+
+# classmethod도 staticmethod도 객체에서 접근이 가능하다
+
+a = CustomClass()
+
+print(a.add_class_method(5, 5))
+print(a.add_static_method(5, 5))
 
 
-@pretty2()
-def f2():
-    print('f2')
-
-f1()
-pretty()(f1)
-f2()
+print(a.add_static_method(3,4))
