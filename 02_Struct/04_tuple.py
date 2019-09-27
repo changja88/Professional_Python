@@ -61,7 +61,7 @@ for name, cc, pop, (latitude, logitude) in metro_areas:
         print(fmt.format(name, latitude, logitude))
 
 #   - 명명된 튜플
-#       - collections.namedtuple() 함수는 필드명과 클래스명을 추가한 튜플의 서브클래스를 생성하는 팰토리 함수로서, 디벙깅에 유용하다
+#       - collections.namedtuple() 함수는 필드명과 클래스명을 추가한 튜플의 서브클래스를 생성하는 팩토리 함수로서, 디벙깅에 유용하다
 from collections import namedtuple
 #       - namedtuple은 객체를 반환한다
 #       - 만드는 방법 namedtuple('객체이름','필드명1 필드명2')

@@ -9,6 +9,7 @@
 #       - bisect(haystack, needle)의 결과값을 인덱스로 사용해서 haystack.insert(index, needle)을 호출 하면 된다
 #   - insort
 #       - 위에 나온 과정을 한방에 해준다
+#   - bisect_left, bisect_right : 같은 값이 있을 경우 오른쪽에 넣을지 왼쪽에 넣을지 정한다
 
 import bisect
 import sys
@@ -28,7 +29,7 @@ def demo(bisect_fn):
 
 if __name__ == '__main__':
     if sys.argv[0] == 'left':
-        bisect_fn = bisect.bisect_left()
+        bisect_fn = bisect.bisect_left
     else:
         bisect_fn = bisect.bisect
 
