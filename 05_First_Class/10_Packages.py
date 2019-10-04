@@ -1,6 +1,6 @@
-# 함수평 프로그래밍을 위한 패키지
+# 함수형 프로그래밍을 위한 패키지
 # - 귀도는 파이썬이 함수형 프로그래밍 언어를 지향하지 않았다고 공표하고 있지만,
-#   operator와 functools 같은 패키지들의 지원 덕분에 파이썬에서도 제법 함수형 코딩 스타일을 사용 할수 있따
+#   operator와 functools 같은 패키지들의 지원 덕분에 파이썬에서도 제법 함수형 코딩 스타일을 사용 할수 있다
 
 # Operator 모듈
 # - reduce와 익명 함수로 구현한 팩토리얼
@@ -73,7 +73,7 @@ upcase = methodcaller('upper')
 print(('---------------------------------'))
 print(upcase(s))
 
-hiphenate = methodcaller('replace', ' ', '-')  # functools.partial() 함수처럼 일부 인수를 고정 할 수 있음을 알수 있
+hiphenate = methodcaller('replace', ' ', '-')  # functools.partial() 함수처럼 일부 인수를 고정 할 수 있음을 알수 있다
 print(hiphenate(s))
 
 # - 이 외에도 52개의 함수들이 있지만 대부분은 이름으로 쉽게 내용을 추측할 수 있다

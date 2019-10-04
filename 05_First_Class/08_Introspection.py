@@ -36,7 +36,7 @@ def clip(text, max_len=80):
     return text[:end].rstrip()
 
 
-# 함수 인수에 대한 정보 추출하기 -> 그다지 사용하기 편하게 배치되어 있지 않ㄷ
+# 함수 인수에 대한 정보 추출하기 -> 그다지 사용하기 편하게 배치되어 있지 않다
 print(clip.__defaults__)
 print(clip.__code__)
 print(clip.__code__.co_varnames)

@@ -11,3 +11,11 @@ chainmap = collections.ChainMap(
 
 a = chainmap.pop('one')
 print(a)
+
+
+chainmap = collections.ChainMap(
+    dict(one=10, two=2), dict(one=3, three=3)
+)
+
+v1 = chainmap.pop('one')
+print(v1) # 중복된 키가 있다면 선입된 값이 나옴

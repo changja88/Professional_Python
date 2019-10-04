@@ -11,7 +11,7 @@ def reverse(word):
     return word[::-1]
 
 
-# 단어 처라를 거꾸로 해서 정
+# 단어 처라를 거꾸로 해서 정렬
 a = sorted(fruits, key=reverse)
 print(a)
 

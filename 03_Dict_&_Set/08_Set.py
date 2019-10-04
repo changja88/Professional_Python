@@ -26,13 +26,13 @@ s = set([1, 2, 3])
 print(
     type(s)
 )
-from dis import dis  # 디스어셈블러 함수인 dis.dis()를 이용해서 두개의 연산에 대한 바이트코드를 사렾보다
+from dis import dis  # 디스어셈블러 함수인 dis.dis()를 이용해서 두개의 연산에 대한 바이트코드를 살펴본
 
 dis('{1}')
 print('----------------------------------------------------')
 
 dis('set([1])')
-# 하지만 frozeset은 생성자를 통해서 만들어야 한다, 리터럴 구문이 없다
+# 변경 불가능한 집합 -> frozeset은 생성자를 통해서 만들어야 한다, 리터럴 구문이 없다
 a = frozenset(range(10))
 print(a)
 
