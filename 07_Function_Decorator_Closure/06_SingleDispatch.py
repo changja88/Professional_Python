@@ -7,7 +7,7 @@ def htmlize(obj):
     return '<pre>{}</pre>'.format(content)
 
 
-# 위 코드를 아래와 같이 개선 하고 싶
+# 위 코드를 아래와 같이 개선 하고 싶다
 # - str : 개행 문자를 <br>\n으로 대체하고 <pre> 대신 <p>태그를 사용한다
 # - int : 숫자를 10진수와 16 진수로 보여준다
 # - list : 각 항목을 자료형에 따라 포맷한 HTML 리스트를 출력한다
