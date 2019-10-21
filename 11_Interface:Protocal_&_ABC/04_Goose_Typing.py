@@ -148,7 +148,7 @@ from random import randrange
 
 
 @Tombola.register # 가상 서브클래스로 등록한다
-class TomboList(list):
+class TomboList(list): 
 
     def pick(self):
         if self:
