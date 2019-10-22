@@ -24,7 +24,7 @@ class Lottery:
 
 
 """
-- artist.draw()와 gunslinger.draw()가 관념적으로 대등하다고 결코 조장 할 수 없다
+- artist.draw()와 gunslinger.draw()가 관념적으로 대등하다고 결코 보장 할 수 없다
 - 즉, 동일한 이름의 메서드를 호출한다고해서 의미가 비슷하다고 생각할 수 없다
 """
 """
@@ -107,7 +107,7 @@ class FrenchDeck2(collections.MutableSequence):
 - 구스 타이핑의 본질적인 기능은 어떤 클래스가 ABC를 상속하지 않더라도 그 클래스의 '가상 서브클래스'로 등록 할수 있다는 것이다
 - ABC의 register()를 호출하면 클래스가 등록된다
 - 등록된 클래스는 ABC의 가상 서브클래스가되어 issubclass()와 isinstace()함수에 인식되지만
-  ABC에서 상속한 메서드나 속성은 전혀 없 
+  ABC에서 상속한 메서드나 속성은 전혀 없다 
 """
 import abc
 import random
@@ -147,8 +147,8 @@ class Tombola(abc.ABC):
 from random import randrange
 
 
-@Tombola.register # 가상 서브클래스로 등록한다
-class TomboList(list): 
+@Tombola.register  # 가상 서브클래스로 등록한다
+class TomboList(list):
 
     def pick(self):
         if self:
@@ -166,5 +166,4 @@ class TomboList(list):
         return tuple(sorted(self))
 
 
-Tombola.register(TomboList) # @Tombola.register 둘중에 하나만 해주면 된
-
+Tombola.register(TomboList)  # @Tombola.register 둘중에 하나만 해주면 된
