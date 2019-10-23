@@ -110,7 +110,6 @@ class FrenchDeck2(collections.MutableSequence):
   ABC에서 상속한 메서드나 속성은 전혀 없다 
 """
 import abc
-import random
 
 
 class Tombola(abc.ABC):
@@ -127,7 +126,7 @@ class Tombola(abc.ABC):
 
     def loaded(self):
         """
-        최소 한 개의 항목이 있으면 True를, 아니면 False를 반환한ㄷ
+        최소 한 개의 항목이 있으면 True를, 아니면 False를 반환한다
         """
         return bool(self.inspect())
 
