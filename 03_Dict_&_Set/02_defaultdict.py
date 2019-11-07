@@ -15,3 +15,8 @@ a['c']  # 값을 넣어주지 않으면 0으로 기본 값이 설정된다
 
 print(a.get('d')) # None을 리턴 한다
 print(a)
+
+
+
+image_upload_type_dict = {'profile': 'profile', 'thumbnail': 'thumbnail'}
+print(image_upload_type_dict.get('a'))
