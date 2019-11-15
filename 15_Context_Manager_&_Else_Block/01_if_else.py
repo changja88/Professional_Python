@@ -27,8 +27,7 @@ except OSError:
 try:
     dangerouse_call()
 except OSError:
-    log('OSError...')
+    log('OSError...') # 예외가 발생 했을 경우만 실행
 else:
-    after_call()
-
+    after_call() # 예외가 발생 하지 않았을 경우에만 실행
 
