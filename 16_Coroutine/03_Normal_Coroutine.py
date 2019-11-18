@@ -20,8 +20,24 @@ def averager():
 - total과 count를 지역 변수로 사용할 수 있다
 - 객체 속성이나 별도의 클로저 없이 평균을 구하는데 필요한 값들을 유지 할 수 있다
 """
+
 coro_avg = averager()
 print(next(coro_avg))
 print(coro_avg.send(10))
 print(coro_avg.send(20))
 print(coro_avg.send(30))
+
+
+def test2(i):
+    print('start test2 coroutine')
+    while True:
+        value = yield i
+        i += value
+
+
+b = test2(5)
+print(next(b))
+# start test1 coroutine 출력 후 5출력, yield i 부분에서 멈춰있다.
+print(b.send(3))
+# yield를 통해 3을 전달하여 value가 3이 된다. 이후 i += value 줄을 거쳐 i=8이되고 한바퀴 돌아 8을출력, yield에서 멈춘다.
+print(b.send(5))
