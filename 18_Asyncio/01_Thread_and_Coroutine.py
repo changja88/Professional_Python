@@ -23,6 +23,89 @@ import itertools
 import time
 import sys
 
-class Signal:
-    go = True
 
+# 쓰레드를 사용 했을 경
+# class Signal:
+#     go = True
+#
+#
+# def spin(msg, signal):
+#     write, flush = sys.stdout.write, sys.stdout.flush
+#     for char in itertools.cycle('|/-\\'):
+#         status = char + ' ' + msg
+#         write(status)
+#         flush()
+#         write('\x08' * len(status))
+#         time.sleep(.1)
+#         if not signal.go:
+#             break
+#
+#     write(' ' * len(status) + '\x08' * len(status))
+#
+#
+# def slow_function():
+#     time.sleep(3)
+#     return 42
+#
+#
+# def supervisor():
+#     signal = Signal()
+#     spinner = threading.Thread(target=spin, args=('thinking!', signal))
+#     print('spinner object:', spinner)
+#     spinner.start()
+#     result = slow_function()
+#     signal.go = False
+#     spinner.join()
+#     return result
+#
+#
+# def main():
+#     result = supervisor()
+#     print('Anser:', result)
+#
+#
+# main()
+
+# asyncio를 사용 했을 경우
+import asyncio
+
+
+@asyncio.coroutine
+def spin1(msg):
+    write, flush = sys.stdout.write, sys.stdout.flush
+    for char in itertools.cycle('|/-\\'):
+        status = char + ' ' + msg
+        write(status)
+        flush()
+        write('\x08' * len(status))
+        try:
+            yield from asyncio.sleep(1)
+        except asyncio.CancelledError:
+            break
+
+    write(' ' * len(status) + '\x08' * len(status))
+
+
+@asyncio.coroutine
+def slow_function1():
+    yield from asyncio.sleep(3)
+    return 42
+
+
+@asyncio.coroutine
+def supervisoer1():
+    spinner = asyncio.create_task(spin1('thinking!'))
+    print('spinner object:', spinner)
+    result = yield from slow_function1()
+    spinner.cancel()
+    return result
+
+
+def main():
+    loop = asyncio.get_event_loop()
+    result = loop.run_until_complete(supervisoer1())
+    loop.close()
+    print('Answer:', result)
+
+
+main()
