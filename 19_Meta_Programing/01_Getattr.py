@@ -73,4 +73,13 @@ class FrozenJSON:
             return obj
 
 
+raw_feed = load()
+feed = FrozenJSON(raw_feed)
+sorted(feed.Schedule.keys()) # __getattr__때문에 가능하
+for key, value in sorted(feed.Schedule.items()):
+    print('{:3} {}'.format(len(value), key))
 
+"""
+- __getattr__ 특별 메소드는 속성을 가져오기 위한 일반적인 과정이 실패 할 때(즉, 지명한 속성을 객체, 클래스, 슈퍼클래스에서
+  찾지 못할때)만 인터프리터에서 호출한다
+"""
