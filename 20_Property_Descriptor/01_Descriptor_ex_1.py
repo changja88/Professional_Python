@@ -53,7 +53,7 @@ class Quantity:
     def __set__(self, instance, value):
         if value > 0:
             instance.__dict__[self.storage_name] = value
-            # setattr() 내장함수를 호출하면 다시 __set__이 호출되어서 무한 루프가 되니 주
+            # setattr() 내장함수를 호출하면 다시 __set__이 호출되어서 무한 루프가 되니 주의
         else:
             raise ValueError('value must be > 0')
 
@@ -79,34 +79,3 @@ class LineItem:
 """
 
 
-class Quantity2:
-    __counter = 0 # Quantity2 객체의 수를 센다
-
-    def __init__(self):
-        cls = self.__class__
-        prefix = cls.__name__
-        index = cls.__counter
-        self.storage_name = '_{}#{}'.format(prefix, index)
-        cls.__counter += 1
-
-    def __get__(self, instance, owner):
-        return getattr(instance, self.storage_name)
-
-    def __set__(self, instance, value):
-        if value > 0:
-            setattr(instance, self.storage_name, value)
-        else:
-            raise ValueError('value must be >0')
-
-
-class LineItem2:
-    weight = Quantity2()
-    price = Quantity2()
-
-    def __init__(self, description, weight, price):
-        self.description = description
-        self.weight = weight
-        self.price = price
-
-    def subtotal(self):
-        return self.weight * self.price
