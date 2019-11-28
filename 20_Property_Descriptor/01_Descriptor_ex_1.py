@@ -53,7 +53,7 @@ class Quantity:
     def __set__(self, instance, value):
         if value > 0:
             instance.__dict__[self.storage_name] = value
-            # setattr() 내장함수를 호출하면 다시 __set__이 호출되어서 무한 루프가 되니 주의
+            # setattr() 내장함수를 호출하면 다시 __set__이 호출되어서 무한 루프가 되니 주의 (이름이 같기 때문)
         else:
             raise ValueError('value must be > 0')
 
@@ -77,5 +77,3 @@ class LineItem:
         디스크립터 객체를 어떤 이름의 변수(예를 들면 weight또는 price)에 바인딩해야 할지 알 수 없다는 것이다
         그렇기 때문에 위 예제 코드에서는 명시적으로 지정하고 있다
 """
-
-

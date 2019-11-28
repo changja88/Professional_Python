@@ -40,7 +40,8 @@ class Managed:
     non_over = NoOverriding()
 
     def spam(self):
-        print('-> Managed.spam({})'.format(display(self)))
+        pass
+        # print('-> Managed.spam({})'.format(display(self)))
 
 
 """
