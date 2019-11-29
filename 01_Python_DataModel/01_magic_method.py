@@ -4,7 +4,7 @@ import collections
 Card = collections.namedtuple('Card', ['rank', 'suit'])
 
 
-# NameTuple
+# NamedTuple
 #   - 보통 튜플의 경우에는 인덱스를 통해서 튜플에 접근이 가능한다 namedtuple을 사용하면 키 값으로 접근이 가능하다
 #   - dict처럼 작동하지만 tuple의 성질을 가지고 있다
 #   - 아주 간단하게 객채를 정의 할 수 있다
@@ -32,7 +32,7 @@ class FrenchDeck:
     # 1. 인터프리터에서 사용 되는 경우에는 마지막으로 실행된 결과값이 _ 변수에 저장이 되어있다
     # 2. 값을 무시하고 싶은 경우 x,_,y = (1,2,3) -> x = 1, y =3
     # 3. 특별한 의미의 네이밍을 하는 경우
-    #   - 파이썬은 지정한 의미의 private을 지원하고 있지 않기 때문에 완전히 private을 강제 할수는 없지만
+    #   - 파이썬은 진정한 의미의 private을 지원하고 있지 않기 때문에 완전히 private을 강제 할수는 없지만
     #   - 한 모듈에서만 사용하는 클래스/함수/변수/메서드 선언을 할때 사용하면 import시에 무시된다
     #   - 하지만 직접 _를 사용해서 접근 할수 있기 때문에 'weak internal use indicator' 라고 한다
     # 4. 숫자 리터럴값의 자릿수 구분을 위한 구분자로써 사용 가능
