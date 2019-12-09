@@ -11,8 +11,8 @@ traveler_ids = [('USA', '31195855'), ('BRA', 'CE342567'), ('ESP', 'SDA201010')]
 
 for passport in sorted(traveler_ids):
     print('%s/%s' % passport)
-    # 튜플 언팩킹 -> 병렬 할당
 
+# 튜플 언팩킹 -> 병렬 할당
 for country, _ in traveler_ids:
     print(country)
 
