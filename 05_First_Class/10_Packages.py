@@ -65,8 +65,12 @@ for city in sorted(metro_areas, key=attrgetter('coord.lat')):  # 스트링인데
 # - methodcaller()
 #   - 실행 중 함수를 생성한다는 점에서 attrgetter나 itemgetter메서드와 비슷하다
 #   - mehtodcaller가 생성한 함수는 인수로 전달받은 객체의 메서드를 호출한다
-#   - 활용 방안을 모르겠다
+#   - 함수형 스타일 에서 람다 대신 사용할 수 있고 함수형 스타일 보다 빠르다 (실행중에 함수를 생성하기 때문)
 from operator import methodcaller
+
+alist = ['wolf', 'sheep', 'duck']
+print(list(filter(lambda x: x.startwith('d'), alist)))
+print(list(filter(methodcaller('startwith', 'd'), alist)))
 
 s = 'The time has come'
 upcase = methodcaller('upper')
@@ -142,5 +146,3 @@ except TypeError as err:
 print()
 print('method2 as partial to work')
 o.method2(o)  # partial에 없는 self를 넣어주면 성공
-
-
