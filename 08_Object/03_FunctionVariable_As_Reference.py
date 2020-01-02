@@ -1,5 +1,5 @@
 # 참조로서의 함수 매개변수
-# - 파이썬은 '공유로 호출(CALL BY SHARING)하는 매겨 변수 전달 방식만 지원한다.
+# - 파이썬은 '공유로 호출(CALL BY SHARING)하는 매개 변수 전달 방식만 지원한다.
 # - 이 방식은 루비, 스몰토크, 자바(참조 자료형일 때만 동일, 기본 자료형으 '값으로 호출(CALL BY VALUE)'방식 호출)
 #   과 동일하다
 # - 대부분의 객체지향 언어에서 사용하는 방식과 동일하다
@@ -8,6 +8,11 @@
 
 # - 결과적으로, 함수는 인수로 전달받은 모든 가변 객체를 변경 할 수 있지만, 객체의 정체성 자체는 변경할 수 없다.
 # - 즉, 어떤 객체를 다른 객체로 바꿀 수는 없다
+
+
+# call by value      : 함수에 복사본을 전달 한다 -> caller의 값은 callee가 지랄을 해도 안바뀐다
+# call by reference  : 함수에 참조값을 전달 한다 -> caller의 값이 callee가 바꾸면 같이 바뀐다
+# call by sharing    : 가변인 경우 참조값을, 불변인 경우 복사본을 전달 한다 - > 위 두개가 섞여있다(가변, 불변이나야 따라 다르다)
 
 
 def f(a, b):
@@ -103,7 +108,7 @@ basketball_team = ['Sue', 'Tina', 'Maya', 'Diana', 'Pat']
 bus = TwilightBus(basketball_team)
 bus.drop('Tina')
 bus.drop('Pat')
-print(basketball_team)  # 농구팀 선수가 사라졌다
+print(basketball_team)  # 농구팀 선수가 사라졌다 (가변형 변수를 넣어 줬기 때문)
 
 
 # 원인 : self.passenger는 passengers에 대한 별명이 되기때문
@@ -119,7 +124,7 @@ class TwilightBus2:
             self.passengers = list(passensgers)
 
 
-# 또는 아래 처럼 하면 사라지지 않는다
+# 또는 아래 처럼 하면 사라지지 않는다 (list(passensgers)부분에서 새로 만들어서 가져가기 때문)
 import copy
 
 bus = TwilightBus(copy.copy(basketball_team))
