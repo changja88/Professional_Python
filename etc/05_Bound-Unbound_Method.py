@@ -17,8 +17,8 @@ Studnet.print_name(s)  # unbound method call -> 클래스를 통해 함수를 �
 s.print_name()  # bound method call -> 인스턴스 객체에 bind된 함수를 호출 한다
 
 """
-메소드에서 self가 붙은 것 -> bound method
-메소드에서 self가 없는 것 -> unbound method 
+메소드에서 self가 붙은 것 -> bound method, 즉 오브젝트 안에 있는 매소드들
+메소드에서 self가 없는 것 -> unbound method, 즉 오브젝트와 상관없이 존재하는 매소드들
 라고 한다
 """
 

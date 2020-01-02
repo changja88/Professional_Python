@@ -17,7 +17,7 @@ import time
 def clock(func):
     def clocked(*args):
         t0 = time.perf_counter()
-        result = func(*args)  # clockec()에 대한 클로저에 자유변수 func가 들어가야 이 코드가 작동한
+        result = func(*args)  # clocked()에 대한 클로저에 자유변수 func가 들어가야 이 코드가 작동한다
         elapsed = time.perf_counter()
         name = func.__name__
         arg_str = ', '.join(repr(arg) for arg in args)

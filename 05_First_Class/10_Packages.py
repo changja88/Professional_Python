@@ -69,8 +69,8 @@ for city in sorted(metro_areas, key=attrgetter('coord.lat')):  # 스트링인데
 from operator import methodcaller
 
 alist = ['wolf', 'sheep', 'duck']
-print(list(filter(lambda x: x.startwith('d'), alist)))
-print(list(filter(methodcaller('startwith', 'd'), alist)))
+print(list(filter(lambda x: x.startswith('d'), alist)))
+print(list(filter(methodcaller('startswith', 'd'), alist)))
 
 s = 'The time has come'
 upcase = methodcaller('upper')
