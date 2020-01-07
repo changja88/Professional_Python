@@ -1,15 +1,7 @@
 
+def gen():
+    for c in 'AB':
+        yield c
+    for i in range(1, 3):
+        yield i
 
-
-
-
-
-
-
-
-
-
-
-class LookingGlass:
-    def __enter__(self):
-        lid
